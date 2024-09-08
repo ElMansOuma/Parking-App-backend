@@ -4,9 +4,7 @@ import com.example.parking_backend.model.ParkingSlot;
 import com.example.parking_backend.model.Vehicle;
 import com.example.parking_backend.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +20,8 @@ public class DashboardController {
         return dashboardService.getParkingSlots();
     }
 
-    @GetMapping("/owned-vehicles")
-    public List<Vehicle> getOwnedVehicles() {
-        return dashboardService.getOwnedVehicles();
+    @GetMapping("/owned-vehicles/{userId}")
+    public List<Vehicle> getOwnedVehicles(@PathVariable Long userId) {
+        return dashboardService.getOwnedVehiclesByUserId(userId);
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class DashboardService {
 
@@ -22,7 +21,8 @@ public class DashboardService {
         return parkingSlotRepository.findAll();
     }
 
-    public List<Vehicle> getOwnedVehicles() {
-        return vehicleRepository.findAll();
+    // Fetch owned vehicles based on userId
+    public List<Vehicle> getOwnedVehiclesByUserId(Long userId) {
+        return vehicleRepository.findByOwnerId(userId);  // Make sure you have the correct method in your repository
     }
 }
