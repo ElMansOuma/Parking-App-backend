@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
+import java.util.HashMap;
+
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -21,7 +24,9 @@ public class UserController {
     User utilisateur = userService.findByEmailAndPassword(user.getEmail(),user.getPassword());
     if (utilisateur != null) {
       session.setAttribute("user", utilisateur);  // Store user in session
-      return ResponseEntity.status(HttpStatus.OK).body("Logged in successfully");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Logged in successfully");
+    return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
   }
@@ -34,10 +39,12 @@ public class UserController {
   }
 
   // Logout endpoint
-  @GetMapping("/logout")
-  public ResponseEntity<?> logout(HttpSession session) {
-    session.invalidate();  // Invalidate session
-    return ResponseEntity.ok().body("Logged out successfully");
-  }
+@GetMapping("/logout")
+public ResponseEntity<?> logout(HttpSession session) {
+  session.invalidate();
+  Map<String, String> response = new HashMap<>();
+  response.put("message", "Logged out successfully");
+  return ResponseEntity.ok(response);
+}
 }
 
