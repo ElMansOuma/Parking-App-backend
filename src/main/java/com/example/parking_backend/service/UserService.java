@@ -4,6 +4,7 @@ import com.example.parking_backend.model.User;
 import com.example.parking_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class UserService {
@@ -12,12 +13,16 @@ public class UserService {
   private UserRepository userRepository;
 
   public User registerUser(User user) {
-    // Save the user to the database (no password encoding)
+    String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+    user.setPassword(hashedPassword);  // Save hashed password
     return userRepository.save(user);
   }
 
-  public User findByEmail(String email) {
-    return userRepository.findByEmail(email); // Find user by email
+  public User findByEmailAndPassword(String email, String password) {
+    User user = userRepository.findByEmail(email);
+    if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+      return user;  // Successful login
+    }
+    return null;  // Incorrect credentials
   }
-
 }
