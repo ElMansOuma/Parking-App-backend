@@ -7,11 +7,11 @@ public class ParkingSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String slotNumber;
+    private String location;
+    private String status;
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -26,5 +26,21 @@ public class ParkingSlot {
 
     public void setSlotNumber(String slotNumber) {
         this.slotNumber = slotNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
