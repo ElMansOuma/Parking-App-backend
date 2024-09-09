@@ -24,9 +24,9 @@ public class UserController {
     User utilisateur = userService.findByEmailAndPassword(user.getEmail(),user.getPassword());
     if (utilisateur != null) {
       session.setAttribute("user", utilisateur);  // Store user in session
-    Map<String, String> response = new HashMap<>();
-    response.put("message", "Logged in successfully");
-    return ResponseEntity.status(HttpStatus.OK).body(response);
+      Map<String, String> response = new HashMap<>();
+      response.put("message", "Logged in successfully");
+      return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
   }
@@ -39,12 +39,11 @@ public class UserController {
   }
 
   // Logout endpoint
-@GetMapping("/logout")
-public ResponseEntity<?> logout(HttpSession session) {
-  session.invalidate();
-  Map<String, String> response = new HashMap<>();
-  response.put("message", "Logged out successfully");
-  return ResponseEntity.ok(response);
+  @GetMapping("/logout")
+  public ResponseEntity<?> logout(HttpSession session) {
+    session.invalidate();
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Logged out successfully");
+    return ResponseEntity.ok(response);
+  }
 }
-}
-
